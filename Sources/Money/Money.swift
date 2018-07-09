@@ -93,6 +93,11 @@ extension Money: ExpressibleByStringLiteral {
 }
 
 extension Money {
+    /// Hashable value
+    public var hashValue: Int {
+        return amount.hashValue ^ currency.code.hashValue
+    }
+    
     /// The sum of two monetary amounts.
     public static func + (lhs: Money<Currency>, rhs: Money<Currency>) -> Money<Currency> {
         return Money<Currency>(lhs.amount + rhs.amount)
@@ -111,6 +116,11 @@ extension Money {
     /// Subtracts one monetary amount from another.
     public static func -= (lhs: inout Money<Currency>, rhs: Money<Currency>) {
         lhs.amount -= rhs.amount
+    }
+    
+    /// Compares one monetary amount from another.
+    public static func ==(lhs: Money<Currency>, rhs: Money<Currency>) -> Bool {
+        return lhs.amount == rhs.amount
     }
 }
 
